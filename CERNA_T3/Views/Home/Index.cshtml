@@ -1,0 +1,42 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+    var mascota = (List<Historia>)Model;
+}
+
+<div class="text-center">
+    <h1 class="display-4">Mascotas</h1>
+</div>
+
+<div class="container">
+    <a href="/home/create" class="btn btn-primary">Nuevo registro</a>
+</div>
+<div class="row text-center">
+    @foreach (var item in mascota)
+    {
+        <div class="container-fluid" style="margin-left:40px;margin-right:40px">
+            <ul class="list-group">
+                <li class="list-group-item">
+                    <p class="text-dark"><strong>@item.Codigo - Dueño: </strong>@item.Dueno <strong>- Mascota: </strong>@item.Mascota</p>
+                    <br />
+                    <span>
+                        <strong>Fecha de registo: </strong>
+                        @string.Format("{0:dd MMMM yyyy}", item.FechaRegistro)
+                    </span>
+                    <span>
+                        <strong>Fecha de Nacimiento: </strong>
+                        @string.Format("{0:dd MMMM yyyy}", item.FechaNacimiento)
+                    </span>
+                    <span><strong>Sexo: </strong>@item.Sexo.Nombre</span>
+                    <span><strong>Especie: </strong>@item.Especie.Nombre</span>
+                    <span><strong>Raza: </strong>@item.Raza.Nombre</span>
+                    <span><strong>Tamaño: </strong>@item.Tamano</span>
+                    <span><strong>Datos Particulares: </strong>@item.DatosParticulares</span>
+                    <span><strong>Direccion (dueño): </strong>@item.DuenoDireccion</span>
+                    <span><strong>Telefono (dueño): </strong>@item.Telefono</span>
+                    <span><strong>Email (dueño): </strong>@item.Email</span>
+                </li>
+            </ul>
+            <br />
+        </div>
+    }
+</div>

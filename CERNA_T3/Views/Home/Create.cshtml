@@ -1,0 +1,101 @@
+﻿@{
+    ViewData["Title"] = "Privacy Policy";
+}
+<div class="row">
+
+    <div class="col-md-4 offset-4">
+        <form action="/home/create" method="post">
+            <label><strong>De la mascota</strong></label>
+            <div class="mb-3">
+                <label>Nombre</label>
+                <input type="text" class="form-control" name="Mascota" placeholder="Nombre de la mascota">
+                <span id="Incorrecto">@Html.ValidationMessage("Mascota")</span>
+            </div>
+            <div class="mb-3">
+                <label>Fecha de Nacimiento</label>
+                <input type="date" class="form-control" name="FechaNacimiento" placeholder="Fecha de Nacimiento">
+                <span id="Incorrecto">@Html.ValidationMessage("FechaNacimiento")</span>
+            </div>
+            <div class="mb-3">
+                <label>Sexo</label>
+                <select id="IdSexo" name="IdSexo">
+                    <option value="">-- Selecciona un Genero --</option>
+                    @foreach (var item in ViewBag.Sexo)
+                    {
+                        <option value="@item.Id">@item.Nombre</option>
+                    }
+                </select>
+                <span id="Incorrecto">@Html.ValidationMessage("IdSexo")</span>
+            </div>
+            <div class="mb-3">
+                <label>Especie</label>
+                <select id="IdEspecie" name="IdEspecie" class="form-control" onchange="cargarRaza()">
+                    <option value="">-- Selecciona una Especie --</option>
+                    @foreach (var item in ViewBag.Especie)
+                    {
+                        <option value="@item.Id">@item.Nombre</option>
+                    }
+                </select>
+                <span id="Incorrecto">@Html.ValidationMessage("IdEspecie")</span>
+            </div>
+            <div class="mb-3">
+                <label>Raza</label>
+                <select id="IdRaza" name="IdRaza" class="form-control">
+                    <option value="">-- Selecciona una raza --</option>
+                </select>
+                <span id="Incorrecto">@Html.ValidationMessage("IdRaza")</span>
+            </div>
+            <div class="mb-3">
+                <label>Tamaño</label>
+                <input type="number" class="form-control" name="Tamano" placeholder="Tamaño de la mascota">
+                <span id="Incorrecto">@Html.ValidationMessage("Tamano")</span>
+            </div>
+            <div class="mb-3">
+                <label>Datos Particulares</label>
+                <textarea class="form-control" placeholder="Datos Particulares de la mascota" name="DatosParticulares" style="height: 100px"></textarea>
+                <span id="Incorrecto">@Html.ValidationMessage("DatosParticulares")</span>
+            </div>
+
+            <label><strong>Del Dueño</strong></label>
+            <div class="mb-3">
+                <label>Nombre</label>
+                <input type="text" class="form-control" name="Dueno" placeholder="Nombre del Dueño">
+                <span id="Incorrecto">@Html.ValidationMessage("Dueno")</span>
+            </div>
+            <div class="mb-3">
+                <label>Direccion</label>
+                <input type="text" class="form-control" name="DuenoDireccion" placeholder="Direccion del Dueño">
+                <span id="Incorrecto">@Html.ValidationMessage("DuenoDireccion")</span>
+            </div>
+            <div class="mb-3">
+                <label>Telefono</label>
+                <input type="text" class="form-control" name="Telefono" placeholder="Telefono del dueño">
+                <span id="Incorrecto">@Html.ValidationMessage("Telefono")</span>
+            </div>
+            <div class="mb-3">
+                <label>Email</label>
+                <input type="email" class="form-control" name="Email" placeholder="Email del Dueño">
+                <span id="Incorrecto">@Html.ValidationMessage("Email")</span>
+            </div>
+            <button type="submit" class="btn btn-primary">Registrar</button>
+        </form>
+    </div>
+</div>
+@section Scripts {
+    <script>
+        function cargarRaza() {
+            var $raza = $('select#IdRaza');
+            var $especie = $('select#IdEspecie');
+            $.ajax({
+                url: '/home/Raza?IdEspecie=' + $especie.val(),
+                type: 'get'
+            }).done(function (items) {
+                var options = '<option value="">-- Seleccione una raza --</option>';
+                for (var i = 0; i < items.length; i++) {
+                    options += `<option value="${items[i].id}">${items[i].nombre}</option>`
+                }
+                $raza.html(options);
+            })
+        }
+    </script>
+}
